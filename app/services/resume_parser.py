@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import fitz
+import pymupdf
 from docx import Document
 
 
@@ -10,7 +10,7 @@ ALLOWED_EXTENSIONS = {".pdf", ".docx"}
 def extract_text_from_pdf(file_path: str) -> str:
     text = []
 
-    with fitz.open(file_path) as pdf:
+    with pymupdf.open(file_path) as pdf:
         for page in pdf:
             text.append(page.get_text())
 

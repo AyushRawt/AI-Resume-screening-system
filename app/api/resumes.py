@@ -24,7 +24,8 @@ async def upload_resume(file: UploadFile = File(...)):
             detail="No filename provided.",
         )
 
-    extension = Path(file.filename).suffix.lower()
+    safe_filename = Path(file.filename).name
+    extension = Path(safe_filename).suffix.lower()
 
     if extension not in ALLOWED_EXTENSIONS:
         raise HTTPException(
@@ -32,7 +33,7 @@ async def upload_resume(file: UploadFile = File(...)):
             detail="Only PDF and DOCX files are supported.",
         )
 
-    file_path = UPLOAD_DIR / file.filename
+    file_path = UPLOAD_DIR / safe_filename
 
     try:
         with file_path.open("wb") as buffer:
@@ -49,7 +50,7 @@ async def upload_resume(file: UploadFile = File(...)):
         candidate = extract_candidate_info(extracted_text)
 
         return {
-            "filename": file.filename,
+            "filename": safe_filename,
             "file_type": extension,
             "message": (
                 "Resume uploaded and candidate information "

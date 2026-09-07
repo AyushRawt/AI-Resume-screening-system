@@ -1,11 +1,11 @@
-﻿services:
+services:
   db:
     image: postgres:18
     container_name: resume_screening_db
     environment:
       POSTGRES_DB: resume_screening
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: change_this_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_this_password}
 
     volumes:
       - postgres_data:/var/lib/postgresql
@@ -22,7 +22,7 @@
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql+psycopg2://postgres:change_this_password@db:5432/resume_screening
+      DATABASE_URL: postgresql+psycopg2://postgres:${POSTGRES_PASSWORD:-change_this_password}@db:5432/resume_screening
     ports:
       - "8000:8000"
 
