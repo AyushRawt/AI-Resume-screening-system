@@ -162,7 +162,7 @@ data/
 ├── resumes/
 └── test_resumes/
 .dockerignore
-.env
+.env.example
 .gitignore
 .streamlit/
 └── config.toml
