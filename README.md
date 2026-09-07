@@ -64,7 +64,7 @@ flowchart TD
     User[Recruiter] --> Streamlit[Streamlit Dashboard]
     Streamlit --> FastAPI[FastAPI API]
     
-    subgraph Application Services
+    subgraph AppServices [Application Services]
         FastAPI --> RP[Resume Parser]
         FastAPI --> CE[Candidate Extractor]
         FastAPI --> JDP[Job Description Processing]
@@ -73,7 +73,7 @@ flowchart TD
         FastAPI --> SR[Screening / Ranking]
     end
     
-    Application Services --> Postgres[(PostgreSQL)]
+    AppServices --> Postgres[(PostgreSQL)]
 ```
 
 - **Streamlit Dashboard**: Provides the user interface for recruiters to input job descriptions, upload resumes, and view ranked results.
