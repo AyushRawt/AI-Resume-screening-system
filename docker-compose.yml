@@ -1,0 +1,30 @@
+﻿services:
+  db:
+    image: postgres:18
+    container_name: resume_screening_db
+    environment:
+      POSTGRES_DB: resume_screening
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: change_this_password
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d resume_screening"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: resume_screening_api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:change_this_password@db:5432/resume_screening
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
